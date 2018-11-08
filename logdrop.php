@@ -7,6 +7,9 @@ while(!feof($fp))
 	var_export($data2);
 }
 */
+/*
+*250 sayısını artırarak log dosyasının içinde incelenecek satır sayısını artırırsınız
+*/
 
 $data = exec("tail -n 250 /var/log/nginx/access.log",$out,$errorno);
 $d = array();
