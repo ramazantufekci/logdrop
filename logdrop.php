@@ -42,7 +42,8 @@ foreach($sonuc as $key=>$value)
 
 		}else
 		{
-			exec("iptables -F");
+			//Herhangi bir ip adresinin kayıtını bulamazsa iptables input chaini temizler
+			exec("iptables -F INPUT");
 		}
 		echo $key.$value." Kere bulundu.".PHP_EOL;
 	}
