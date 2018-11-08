@@ -8,14 +8,14 @@ while(!feof($fp))
 }
 */
 
-$data = exec("tail -n 250 /var/log/nginx/access.log",$errno,$out);
+$data = exec("tail -n 250 /var/log/nginx/access.log",$out,$errorno);
 $d = array();
-foreach($errno as $data)
+foreach($out as $data)
 {
 	preg_match("#^\d{1,3}\.+\d{1,3}\.+\d{1,3}\.+\d{1,3}#",$data,$ip);
 	$sayac = 0;
 	preg_match("#\[\d{1,2}+/\w{1,5}+/\d{1,4}:\d{1,2}:\d{1,2}#",$data,$tarih);
-	foreach($errno as $data2)
+	foreach($out as $data2)
 	{
 		preg_match("#^\d{1,3}\.+\d{1,3}\.+\d{1,3}\.+\d{1,3}#",$data2,$ip2);
 		preg_match("#\[\d{1,2}+/\w{1,5}+/\d{1,4}:\d{1,2}:\d{1,2}#",$data2,$tarih2);
@@ -28,19 +28,19 @@ foreach($errno as $data)
 	$sonuc[$ip[0]]=$sayac;
 	$sonuc = array_unique($sonuc);
 }
-var_export($sonuc);
+
 foreach($sonuc as $key=>$value)
 {
 	if($key!="haric ip adresi kendi ip adresinizi buraya yazarsanız engellemez")
 	{
 		if($value>3)
 		{
-//			exec("iptables -I INPUT -s ".$key." -j DROP");
+			exec("iptables -I INPUT -s ".$key." -j DROP");
 
 		}else
 		{
 			exec("iptables -F");
 		}
-		echo $key ." naber la ".$value.PHP_EOL;
+		echo $key.$value." Kere bulundu.".PHP_EOL;
 	}
 }
